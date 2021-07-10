@@ -32,28 +32,34 @@
       <div class="mt-12">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div class="pt-6" v-for="(image, index) in images" :key="index">
-            <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8">
-              <div class="m-auto -mt-6" style="height: 300px; width: 300px">
-                <div
-                  class="
-                    w-full
-                    h-full
-                    bg-white
-                    overflow-hidden
-                    shadow
-                    rounded-lg
-                  "
-                >
-                  <div class="w-full h-full px-4 py-5 sm:p-6">
-                    <img class="m-auto" :src="image.src" :alt="image.alt" />
+            <NuxtLink
+              :to="image.to"
+              class="text-sm font-medium text-gray-500 hover:text-gray-700"
+            >
+              <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8">
+                <div class="m-auto -mt-6" style="height: 300px; width: 300px">
+                  <div
+                    class="
+                      w-full
+                      h-full
+                      bg-white
+                      overflow-hidden
+                      shadow
+                      rounded-lg
+                    "
+                  >
+                    <div class="w-full h-full px-4 py-5 sm:p-6">
+                      <img class="m-auto" :src="image.src" :alt="image.alt" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </NuxtLink>
           </div>
         </div>
       </div>
     </div>
+    <p>Designs from <a href="vecteezy.com" target="_blank">vecteezy.com</a></p>
   </div>
 </template>
 
@@ -65,6 +71,7 @@ export default {
       return [
         {
           alt: "Front side of image",
+          to: "/front",
           src: this.$cloudinary.image.url(
             "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-front.jpg",
             { crop: "fit", width: 300, height: 300 }
@@ -72,6 +79,7 @@ export default {
         },
         {
           alt: "Back side of image",
+          to: "/back",
           src: this.$cloudinary.image.url(
             "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-back.jpg",
             { crop: "fit", width: 300, height: 300 }
@@ -79,6 +87,7 @@ export default {
         },
         {
           alt: "Shoulder side of image",
+          to: "/side",
           src: this.$cloudinary.image.url(
             "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-side.jpg",
             { crop: "fit", width: 300, height: 300 }

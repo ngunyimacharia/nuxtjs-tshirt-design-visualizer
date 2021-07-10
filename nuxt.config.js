@@ -43,6 +43,7 @@ export default {
   },
 
   cloudinary: {
-    cloudName: process.env.NUXT_ENV_CLOUD_NAME
+    cloudName: process.env.NUXT_ENV_CLOUD_NAME,
+    useComponent: true
   }
 }
