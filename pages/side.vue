@@ -79,6 +79,7 @@
       class="m-auto"
       width="300"
     >
+      <cld-transformation effect="colorize:90" :color="color" />
       <cld-transformation
         :overlay="`fetch:${$cloudinary.image.url(sideDesign)}`"
         width="100"
@@ -101,6 +102,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      color: "color",
       sideTemplate: "sideTemplate",
       sideDesign: "sideDesign",
     }),

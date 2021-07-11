@@ -79,6 +79,7 @@
       class="m-auto"
       width="600"
     >
+      <cld-transformation effect="colorize:90" :color="color" />
       <cld-transformation
         :overlay="`fetch:${$cloudinary.image.url(backDesign)}`"
         width="500"
@@ -98,6 +99,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      color: "color",
       backTemplate: "backTemplate",
       backDesign: "backDesign",
     }),

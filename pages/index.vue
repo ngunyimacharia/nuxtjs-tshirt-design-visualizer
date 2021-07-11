@@ -60,6 +60,10 @@
                         width="600"
                       >
                         <cld-transformation
+                          effect="colorize:90"
+                          :color="color"
+                        />
+                        <cld-transformation
                           :overlay="`fetch:${$cloudinary.image.url(
                             frontDesign
                           )}`"
@@ -96,6 +100,10 @@
                         class="m-auto"
                         width="600"
                       >
+                        <cld-transformation
+                          effect="colorize:90"
+                          :color="color"
+                        />
                         <cld-transformation
                           :overlay="`fetch:${$cloudinary.image.url(
                             backDesign
@@ -134,6 +142,10 @@
                         width="600"
                       >
                         <cld-transformation
+                          effect="colorize:90"
+                          :color="color"
+                        />
+                        <cld-transformation
                           :overlay="`fetch:${$cloudinary.image.url(
                             sideDesign
                           )}`"
@@ -162,6 +174,7 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
+      color: "color",
       frontTemplate: "frontTemplate",
       frontDesign: "frontDesign",
       backTemplate: "backTemplate",

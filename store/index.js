@@ -1,13 +1,15 @@
 export const state = () => ({
+    color: "#ff0000",
     frontTemplate: "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-front",
     backTemplate: "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-back",
     sideTemplate: "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-side",
-    frontDesign: "nuxtjs-tshirt-design-visualizer/uploads/defaults/default-front",
-    backDesign: "nuxtjs-tshirt-design-visualizer/uploads/defaults/default-back",
-    sideDesign: "nuxtjs-tshirt-design-visualizer/uploads/defaults/default-side",
+    frontDesign: "nuxtjs-tshirt-design-visualizer/uploads/defaults/default-front-transparent",
+    backDesign: "nuxtjs-tshirt-design-visualizer/uploads/defaults/default-back-transparent",
+    sideDesign: "nuxtjs-tshirt-design-visualizer/uploads/defaults/default-side-transparent",
 });
 
 export const getters = {
+    color: state => state.color,
     frontTemplate: state => state.frontTemplate,
     backTemplate: state => state.backTemplate,
     sideTemplate: state => state.sideTemplate,
@@ -17,6 +19,10 @@ export const getters = {
 };
 
 export const mutations = {
+    updateColor(state, color) {
+        state.color = color;
+        return state.color;
+    },
     updateFrontDesign(state, public_id) {
         state.frontDesign = public_id;
         return state.frontDesign;
@@ -32,6 +38,9 @@ export const mutations = {
 }
 
 export const actions = {
+    updateColor({ commit }, color) {
+        return commit('updateColor', color);
+    },
     updateFrontDesign({ commit }, public_id) {
         return commit('updateFrontDesign', public_id);
     },
