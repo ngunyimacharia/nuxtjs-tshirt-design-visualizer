@@ -63,16 +63,14 @@
         </h2>
       </div>
       <div class="mt-5 flex lg:mt-0 lg:ml-4">
-        <span class="hidden sm:block">
-          <input
-            v-if="!uploading"
-            type="file"
-            accept=".jpeg,.jpg,.png,image/jpeg,image/png"
-            aria-label="upload image button"
-            @change="selectFile"
-          />
-          <div v-else>Please wait, upload in progress</div>
-        </span>
+        <input
+          v-if="!uploading"
+          type="file"
+          accept=".jpeg,.jpg,.png,image/jpeg,image/png"
+          aria-label="upload image button"
+          @change="selectFile"
+        />
+        <div v-else>Please wait, upload in progress</div>
       </div>
     </div>
     <cld-image
