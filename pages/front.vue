@@ -64,63 +64,72 @@
       </div>
       <div class="mt-5 flex lg:mt-0 lg:ml-4">
         <span class="hidden sm:block">
-          <button
-            type="button"
-            class="
-              inline-flex
-              items-center
-              px-4
-              py-2
-              border border-gray-300
-              rounded-md
-              shadow-sm
-              text-sm
-              font-medium
-              text-gray-700
-              bg-white
-              hover:bg-gray-50
-              focus:outline-none
-              focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-            "
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-              ></path>
-            </svg>
-            Upload
-          </button>
+          <input
+            v-if="!uploading"
+            type="file"
+            accept=".jpeg,.jpg,.png,image/jpeg,image/png"
+            aria-label="upload image button"
+            @change="selectFile"
+          />
+          <div v-else>Please wait, upload in progress</div>
         </span>
       </div>
     </div>
     <cld-image
-      public-id="nuxtjs-tshirt-design-visualizer/assets/tshirt-template-front"
+      :public-id="frontTemplate"
       alt="Front side of T-shirt "
       class="m-auto"
       width="600"
     >
-      <cld-transformation :overlay="`fetch:${defaultDesign}`" width="500" />
+      <cld-transformation
+        :overlay="`fetch:${$cloudinary.image.url(frontDesign)}`"
+        width="500"
+      />
     </cld-image>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
-      defaultDesign: this.$cloudinary.image.url(
-        "nuxtjs-tshirt-design-visualizer/uploads/defaults/default-front"
-      ),
+      uploading: false,
     };
+  },
+  computed: {
+    ...mapGetters({
+      frontTemplate: "frontTemplate",
+      frontDesign: "frontDesign",
+    }),
+  },
+  methods: {
+    async selectFile(e) {
+      this.uploading = true;
+      const file = e.target.files[0];
+      /* Make sure file exists */
+      if (!file) return;
+      /* create a reader */
+      const readData = (f) =>
+        new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(f);
+        });
+      /* Read data */
+      const data = await readData(file);
+      /* upload the converted data */
+      const instance = await this.$cloudinary.upload(data, {
+        folder: "nuxtjs-tshirt-design-visualizer/uploads",
+        uploadPreset: "tshirt-design-upload",
+      });
+
+      this.$store
+        .dispatch("updateFrontDesign", instance.public_id)
+        .then(() => this.$router.push("/"))
+        .finally(() => (this.uploading = false));
+    },
   },
 };
 </script>
