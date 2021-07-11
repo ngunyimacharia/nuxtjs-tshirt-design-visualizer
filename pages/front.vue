@@ -102,15 +102,13 @@
         </span>
       </div>
     </div>
-    <br />
-    <img :src="defaultDesign" />
-    <br />
     <cld-image
-      public-id="nuxtjs-tshirt-design-visualizer/assets/tshirt-template-front.jpg"
+      public-id="nuxtjs-tshirt-design-visualizer/assets/tshirt-template-front"
       alt="Front side of T-shirt "
       class="m-auto"
+      width="600"
     >
-      <cld-transformation :overlay="`fetch:${defaultDesign}`" />
+      <cld-transformation :overlay="`fetch:${defaultDesign}`" width="500" />
     </cld-image>
   </div>
 </template>
@@ -119,8 +117,9 @@
 export default {
   data() {
     return {
-      defaultDesign:
-        "https://res.cloudinary.com/kmashytski/image/upload/v1624938606/business-card-generator/assets/globe-icon.png",
+      defaultDesign: this.$cloudinary.image.url(
+        "nuxtjs-tshirt-design-visualizer/uploads/defaults/default-front"
+      ),
     };
   },
 };
