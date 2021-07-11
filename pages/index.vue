@@ -33,7 +33,9 @@
         <a href="https://vecteezy.com" target="_blank">vecteezy.com</a>
       </p>
 
-      <div class="mt-12">
+      <v-swatches class="pt-10" v-model="newColor" inline></v-swatches>
+
+      <div class="mt-12" v-if="!colorChanging">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div class="pt-6">
             <NuxtLink
@@ -171,7 +173,16 @@
 <script>
 import { mapGetters } from "vuex";
 
+import VSwatches from "vue-swatches";
+
 export default {
+  components: { VSwatches },
+  data() {
+    return {
+      newColor: null,
+      colorChanging: false,
+    };
+  },
   computed: {
     ...mapGetters({
       color: "color",
@@ -182,6 +193,14 @@ export default {
       sideTemplate: "sideTemplate",
       sideDesign: "sideDesign",
     }),
+  },
+  watch: {
+    newColor(color) {
+      this.colorChanging = true;
+      this.$store
+        .dispatch("updateColor", color)
+        .then(() => (this.colorChanging = false));
+    },
   },
 };
 </script>
