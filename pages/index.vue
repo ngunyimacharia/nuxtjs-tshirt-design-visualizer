@@ -28,12 +28,16 @@
       <p class="mt-5 max-w-prose mx-auto text-xl text-gray-500">
         Tap on any of these cards below to upload front, back and side designs
         for your t-shirt.
+        <br />
+        Designs from
+        <a href="https://vecteezy.com" target="_blank">vecteezy.com</a>
       </p>
+
       <div class="mt-12">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          <div class="pt-6" v-for="(image, index) in images" :key="index">
+          <div class="pt-6">
             <NuxtLink
-              :to="image.to"
+              to="front"
               class="text-sm font-medium text-gray-500 hover:text-gray-700"
             >
               <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8">
@@ -49,7 +53,96 @@
                     "
                   >
                     <div class="w-full h-full px-4 py-5 sm:p-6">
-                      <img class="m-auto" :src="image.src" :alt="image.alt" />
+                      <cld-image
+                        :public-id="frontTemplate"
+                        alt="Front side of T-shirt "
+                        class="m-auto"
+                        width="600"
+                      >
+                        <cld-transformation
+                          :overlay="`fetch:${$cloudinary.image.url(
+                            frontDesign
+                          )}`"
+                          width="500"
+                        />
+                      </cld-image>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </NuxtLink>
+          </div>
+          <div class="pt-6">
+            <NuxtLink
+              to="back"
+              class="text-sm font-medium text-gray-500 hover:text-gray-700"
+            >
+              <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8">
+                <div class="m-auto -mt-6" style="height: 300px; width: 300px">
+                  <div
+                    class="
+                      w-full
+                      h-full
+                      bg-white
+                      overflow-hidden
+                      shadow
+                      rounded-lg
+                    "
+                  >
+                    <div class="w-full h-full px-4 py-5 sm:p-6">
+                      <cld-image
+                        :public-id="backTemplate"
+                        alt="Back side of T-shirt "
+                        class="m-auto"
+                        width="600"
+                      >
+                        <cld-transformation
+                          :overlay="`fetch:${$cloudinary.image.url(
+                            backDesign
+                          )}`"
+                          width="500"
+                        />
+                      </cld-image>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </NuxtLink>
+          </div>
+          <div class="pt-6">
+            <NuxtLink
+              to="side"
+              class="text-sm font-medium text-gray-500 hover:text-gray-700"
+            >
+              <div class="flow-root bg-gray-50 rounded-lg px-6 pb-8">
+                <div class="m-auto -mt-6" style="height: 300px; width: 300px">
+                  <div
+                    class="
+                      w-full
+                      h-full
+                      bg-white
+                      overflow-hidden
+                      shadow
+                      rounded-lg
+                    "
+                  >
+                    <div class="w-full h-full px-4 py-5 sm:p-6">
+                      <cld-image
+                        :public-id="sideTemplate"
+                        alt="Shoulder side of T-shirt "
+                        class="m-auto"
+                        width="600"
+                      >
+                        <cld-transformation
+                          :overlay="`fetch:${$cloudinary.image.url(
+                            sideDesign
+                          )}`"
+                          width="100"
+                          gravity="north"
+                          y="250"
+                          x="25"
+                        />
+                      </cld-image>
                     </div>
                   </div>
                 </div>
@@ -59,42 +152,23 @@
         </div>
       </div>
     </div>
-    <p>Designs from <a href="vecteezy.com" target="_blank">vecteezy.com</a></p>
   </div>
 </template>
 
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
-    images() {
-      return [
-        {
-          alt: "Front side of image",
-          to: "/front",
-          src: this.$cloudinary.image.url(
-            "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-front.jpg",
-            { crop: "fit", width: 300, height: 300 }
-          ),
-        },
-        {
-          alt: "Back side of image",
-          to: "/back",
-          src: this.$cloudinary.image.url(
-            "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-back.jpg",
-            { crop: "fit", width: 300, height: 300 }
-          ),
-        },
-        {
-          alt: "Shoulder side of image",
-          to: "/side",
-          src: this.$cloudinary.image.url(
-            "nuxtjs-tshirt-design-visualizer/assets/tshirt-template-side.jpg",
-            { crop: "fit", width: 300, height: 300 }
-          ),
-        },
-      ];
-    },
+    ...mapGetters({
+      frontTemplate: "frontTemplate",
+      frontDesign: "frontDesign",
+      backTemplate: "backTemplate",
+      backDesign: "backDesign",
+      sideTemplate: "sideTemplate",
+      sideDesign: "sideDesign",
+    }),
   },
 };
 </script>
